@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>Asterix Uploader</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+      background: #f3f4f6;
+    }
+    input, button {
+      display: block;
+      margin-bottom: 15px;
+      padding: 10px;
+      width: 100%;
+      font-size: 1rem;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background: #111827;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #1f2937;
+    }
+    .log {
+      background: #fff;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      min-height: 50px;
+      margin-top: 10px;
+    }
+    .loader {
+      display: none;
+      margin: 20px auto;
+      border: 6px solid #f3f3f3;
+      border-top: 6px solid #111827;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .timer {
+      text-align: center;
+      font-size: 1.2rem;
+      margin-top: 10px;
+      color: #111;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+<h1>أداة رفع الملفات إلى Asterix</h1>
+<h2>ارفع موقعك الي الانترنت مجانا بواسطه خدمات Asterix</h2>
+
+<input id="pageName" placeholder="اسم المشروع (مثال: portfolio)" />
+<input id="layerName" placeholder="اسم الطبقة (مثال: v1)" />
+<input type="file" id="folderUpload" webkitdirectory directory multiple />
+
+<button onclick="uploadFolder()">🚀 نشر المجلد</button>
+
+<div class="loader" id="loader"></div>
+<div class="timer" id="timer"></div>
+<div class="log" id="logBox">بانتظار رفع المجلد...</div>
+<script>
+async function uploadFolder() {
+  const page = document.getElementById('pageName').value.trim();
+  const layer = document.getElementById('layerName').value.trim();
+  const files = document.getElementById('folderUpload').files;
+  const logBox = document.getElementById('logBox');
+  const loader = document.getElementById('loader');
+  const timer = document.getElementById('timer');
+
+  if (!page || !layer || files.length === 0) {
+    logBox.innerText = '⚠️ يرجى إدخال اسم الصفحة والطبقة واختيار مجلد.';
+    return;
+  }
+
+  const username = 'Asterix-web';
+  const repo = 'Asterix-Coder';
+  const token = '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';
+  let uploaded = 0;
+
+  loader.style.display = 'block';
+  timer.innerText = '';
+  logBox.innerText = '📤 جاري رفع الملفات...';
+
+  // معرفة اسم المجلد الرئيسي الذي نريد تجاهله
+  const baseFolder = files[0].webkitRelativePath.split("/")[0];
+
+  for (const file of files) {
+    const relativePath = file.webkitRelativePath.split("/").slice(1).join("/"); // حذف اسم المجلد الرئيسي
+    const pathInRepo = `projects/${page}/${layer}/${relativePath}`;
+    const content = await file.text();
+    const encoded = btoa(unescape(encodeURIComponent(content)));
+
+    const url = `https://api.github.com/repos/${username}/${repo}/contents/${pathInRepo}`;
+    const res = await fetch(url, {
+      method: "PUT",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Accept": "application/vnd.github+json"
+      },
+      body: JSON.stringify({
+        message: `رفع ${file.name} إلى ${page}/${layer}`,
+        content: encoded,
+        branch: "main"
+      })
+    });
+
+    if (res.ok) {
+      uploaded++;
+    } else {
+      const err = await res.json();
+      loader.style.display = 'none';
+      timer.innerText = '';
+      logBox.innerText = `❌ فشل في رفع ${file.name}: ${err.message}`;
+      return;
+    }
+  }
+
+  // بدء المؤقت (60 ثانية)
+  let seconds = 60;
+  timer.innerText = `⏳ جاري التحميل (${seconds} ثانية)`;
+
+  const countdown = setInterval(() => {
+    seconds--;
+    timer.innerText = `⏳ جاري التحميل (${seconds} ثانية)`;
+    if (seconds <= 0) {
+      clearInterval(countdown);
+      loader.style.display = 'none';
+      timer.innerText = '';
+      const link = `https://${username}.github.io/${repo}/projects/${page}/${layer}/`;
+      logBox.innerHTML = `✅ تم النشر! <br><a href="${link}" target="_blank">${link}</a>`;
+    }
+  }, 1000);
+}
+</script>
+
+
+</body>
+</html>
