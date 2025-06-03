@@ -2,72 +2,331 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>Asterix | Upload Welcom</title>
+  <title>Asterix | رفع المواقع المجاني</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --primary: #333;
+      --primary-dark: #1f2937;
+      --secondary: #f59e0b;
+      --dark: #1e293b;
+      --light: #f8fafc;
+      --success: #10b981;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+      --info: #3b82f6;
+      --gray: #94a3b8;
+      --gray-light: #e2e8f0;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #f9fafb;
+      font-family: 'Tajawal', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+      padding: 20px;
+      color: var(--dark);
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+    
+    header {
+      background: var(--primary);
+      color: white;
       padding: 30px;
       text-align: center;
-      color: #111827;
+      position: relative;
     }
-
-    h1 {
+    
+    header h1 {
       font-size: 2rem;
+      margin-bottom: 15px;
+    }
+    
+    header p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
       margin-bottom: 10px;
     }
-
-    p {
-      font-size: 1.1rem;
-      margin: 10px 0;
-      line-height: 1.8;
+    
+    .content {
+      padding: 30px;
     }
-
-    ul {
-      text-align: right;
+    
+    .alert {
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: flex-start;
+    }
+    
+    .alert-warning {
+      background-color: rgba(245, 158, 11, 0.1);
+      border-left: 4px solid var(--warning);
+    }
+    
+    .alert-info {
+      background-color: rgba(59, 130, 246, 0.1);
+      border-left: 4px solid var(--info);
+    }
+    
+    .alert-icon {
+      margin-left: 10px;
+      font-size: 1.5rem;
+    }
+    
+    .alert-warning .alert-icon {
+      color: var(--warning);
+    }
+    
+    .alert-info .alert-icon {
+      color: var(--info);
+    }
+    
+    .instructions {
+      background: var(--light);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 25px 0;
+    }
+    
+    .instructions h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: var(--primary);
+      font-size: 1.4rem;
+    }
+    
+    .instructions-list {
+      list-style-type: none;
+    }
+    
+    .instructions-list li {
+      padding: 10px 0;
+      border-bottom: 1px solid var(--gray-light);
+      display: flex;
+      align-items: flex-start;
+    }
+    
+    .instructions-list li:last-child {
+      border-bottom: none;
+    }
+    
+    .instruction-icon {
+      margin-left: 10px;
+      color: var(--primary);
+      font-size: 1.2rem;
+      min-width: 25px;
+    }
+    
+    code {
+      background: var(--dark);
+      color: white;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 0.9rem;
+    }
+    
+    .btn {
       display: inline-block;
-      margin-top: 10px;
-      padding: 0 20px;
-    }
-
-    ul li {
-      font-size: 1rem;
-      margin-bottom: 8px;
-    }
-
-    button {
-      margin-top: 30px;
-      background-color: #111827;
-      color: #fff;
-      padding: 12px 24px;
-      font-size: 1rem;
+      margin-top: 20px;
+      background: var(--primary);
+      color: white;
+      padding: 15px 30px;
+      font-size: 1.1rem;
+      font-weight: bold;
       border: none;
       border-radius: 8px;
       cursor: pointer;
-      transition: background 0.3s ease;
+      transition: all 0.3s;
+      text-decoration: none;
+      text-align: center;
     }
-
-    button:hover {
-      background-color: #1f2937;
+    
+    .btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(79, 70, 229, 0.3);
+    }
+    
+    .btn i {
+      margin-left: 8px;
+    }
+    
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+    
+    .feature-card {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      text-align: center;
+      transition: all 0.3s;
+      border: 1px solid var(--gray-light);
+    }
+    
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+    
+    .feature-icon {
+      font-size: 2rem;
+      color: var(--primary);
+      margin-bottom: 15px;
+    }
+    
+    .feature-title {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      padding: 20px;
+      color: var(--gray);
+      font-size: 0.9rem;
+      border-top: 1px solid var(--gray-light);
+    }
+    
+    @media (max-width: 600px) {
+      header {
+        padding: 20px;
+      }
+      
+      header h1 {
+        font-size: 1.6rem;
+      }
+      
+      .content {
+        padding: 20px;
+      }
+      
+      .features {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 <body>
+  <div class="container">
+    <header>
+      <div class="logo">Asterix</div>
+      <h1>رفع المواقع المجاني مع Asterix</h1>
+      <p>انشر موقعك على الإنترنت مجاناً خلال دقائق بدون أي تعقيدات</p>
+    </header>
+    
+    <div class="content">
+      <div class="alert alert-warning">
+        <div class="alert-icon">
+          <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        <div>
+          <strong>تنبيه مهم:</strong> هذه الخدمة مخصصة للمواقع الثابتة (HTML, CSS, JS). لا تدعم خوادم الويب أو قواعد البيانات.
+        </div>
+      </div>
+      
+      <div class="instructions">
+        <h2><i class="fas fa-list-check"></i> تعليمات مهمة قبل البدء</h2>
+        <ul class="instructions-list">
+          <li>
+            <span class="instruction-icon"><i class="fas fa-folder-open"></i></span>
+            <span>تأكد أنك ترفع <strong>مجلد المشروع مباشرة</strong> وليس مجلد بداخله مجلد آخر (يجب أن يحتوي على index.html في الجذر)</span>
+          </li>
+          <li>
+            <span class="instruction-icon"><i class="fas fa-file-code"></i></span>
+            <span>يجب أن يحتوي المجلد على ملف <code>index.html</code> كصفحة رئيسية</span>
+          </li>
+          <li>
+            <span class="instruction-icon"><i class="fas fa-font"></i></span>
+            <span>استخدم أسماء بالإنجليزية فقط بدون مسافات (يمكن استخدام _ أو -)</span>
+          </li>
+          <li>
+            <span class="instruction-icon"><i class="fas fa-clock"></i></span>
+            <span>انتظر 60 ثانية بعد الرفع حتى يصبح الموقع جاهزًا</span>
+          </li>
+          <li>
+            <span class="instruction-icon"><i class="fas fa-shield-alt"></i></span>
+            <span>لا ترفع ملفات تزيد عن 25MB أو تحتوي على محتوى غير قانوني</span>
+          </li>
+        </ul>
+      </div>
+      
+      <a href="newloader.html" class="btn">
+        <i class="fas fa-rocket"></i> ابدأ رفع مشروعك الآن
+      </a>
+      
+      <div class="features">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-bolt"></i>
+          </div>
+          <div class="feature-title">نشر فوري</div>
+          <p>رفع ونشر الموقع خلال دقائق معدودة</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-lock"></i>
+          </div>
+          <div class="feature-title">آمن تماماً</div>
+          <p>جميع الملفات محمية بنظام GitHub الآمن</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-infinity"></i>
+          </div>
+          <div class="feature-title">مجاني دائمًا</div>
+          <p>لا توجد رسوم خفية أو اشتراكات</p>
+        </div>
+      </div>
+    </div>
+    
+    <footer>
+      <p>جميع الحقوق محفوظة &copy; <span id="year"></span> Asterix Uploader</p>
+    </footer>
+  </div>
 
-  <h1>ارفع موقعك مجانا بواسطه خدمه Asterix</h1>
-  <p>من خلال هذه الأداة يمكنك رفع مشروعك إلى GitHub Pages بسهولة خلال دقيقة واحدة!</p>
-
-  <p><strong>يرجى اتباع التعليمات التالية لتجنب المشاكل:</strong></p>
-  <ul>
-    <li>📁 تأكد أنك ترفع **مجلد المشروع مباشرة** وليس مجلد بداخله مجلد آخر.</li>
-    <li>📄 يجب أن يحتوي المجلد على ملف <code>index.html</code> في الجذر.</li>
-    <li>🧪 لا تستخدم أسماء تحتوي على مسافات أو رموز غريبة (يفضل استخدام الإنجليزية).</li>
-    <li>🛠️ سيتم رفع الملفات تلقائيًا داخل المسار: <code>projects/اسم_المشروع/اسم_الطبقة</code></li>
-    <li>⏳ انتظر 60 ثانية بعد الرفع ليكون الموقع جاهزًا.</li>
-  </ul>
-
-  <button onclick="location.href='newloader.html'">🚀 ابدأ رفع مشروعك الآن</button>
-
+  <script>
+    // إضافة السنة الحالية في الفوتر
+    document.getElementById('year').textContent = new Date().getFullYear();
+    
+    // تحذير إذا كان هناك مشكلة في الصفحة التالية
+    if(!localStorage.getItem('asterix-warning-shown')) {
+      alert('⚠️ يرجى قراءة التعليمات بعناية قبل رفع الملفات لتجنب المشاكل');
+      localStorage.setItem('asterix-warning-shown', 'true');
+    }
+  </script>
 </body>
 </html>
